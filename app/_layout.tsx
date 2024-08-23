@@ -61,9 +61,9 @@ function RootLayoutNav() {
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <PaperProvider theme={paperTheme}>
-        <Stack>
+        <Stack initialRouteName="/groups">
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="Palette" options={{ presentation: 'modal' }} />
         </Stack>
       </PaperProvider>
     /* </ThemeProvider> */

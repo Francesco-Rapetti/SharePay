@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "SharePay",
-    "slug": "SharePay",
-    "version": "0.0.1",
+    "name": "sharepay",
+    "slug": "sharepay",
+    "version": "0.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
