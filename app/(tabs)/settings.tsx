@@ -1,15 +1,21 @@
-import { StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { StyleSheet, useColorScheme } from "react-native";
+import { Text, View } from "@/components/Themed";
+import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 
 export default function TabTwoScreen() {
+  const colorScheme = useColorScheme();
+  const { theme } = useMaterial3Theme();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Version: {Constants.expoConfig?.version}</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: theme[colorScheme ?? "light"].background },
+      ]}
+    >
+      <View style={{ backgroundColor: "transparent" }}>
+        <Text style={styles.title}>Settings</Text>
+      </View>
     </View>
   );
 }
@@ -17,16 +23,11 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    fontWeight: "bold",
   },
 });
