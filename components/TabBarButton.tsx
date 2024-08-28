@@ -1,12 +1,6 @@
 import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import React, { useEffect } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, useColorScheme } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
