@@ -56,25 +56,25 @@ export default function PrimaryBtn({
   });
 
   const animatedContainerStyle = useAnimatedStyle(() => {
-    const padding = interpolate(containerScale.value, [0, 1], [20, 15]);
     const paddingRight = interpolate(containerScale.value, [0, 1], [110, 15]);
+    const borderRadius = interpolate(containerScale.value, [0, 1], [50, 15]);
 
     return {
       paddingHorizontal: 15,
       paddingRight,
+      borderRadius,
     };
   });
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={[
-        styles.button,
-        { backgroundColor: theme[colorScheme ?? "light"].primary },
-      ]}
-      {...props}
-    >
-      <Animated.View style={[animatedContainerStyle, styles.container]}>
+    <Pressable onPress={onPress} style={[styles.button]} {...props}>
+      <Animated.View
+        style={[
+          animatedContainerStyle,
+          styles.container,
+          { backgroundColor: theme[colorScheme ?? "light"].primary },
+        ]}
+      >
         <Animated.View style={animatedIconStyle}>
           <MaterialCommunityIcons
             name={iconName}
@@ -106,6 +106,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
+    // borderRadius: 50,
+    paddingVertical: 15,
   },
   button: {
     position: "absolute",
@@ -114,11 +116,10 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 15,
     // paddingHorizontal: 20,
-    borderRadius: 50,
+    // borderRadius: 50,
     flexDirection: "row",
-    margin: 15,
+    margin: 20,
     shadowOffset: { width: 0, height: 10 },
     shadowRadius: 10,
     shadowOpacity: 0.1,
