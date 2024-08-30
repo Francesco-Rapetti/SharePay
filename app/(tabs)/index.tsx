@@ -14,7 +14,7 @@ export default function TabOneScreen() {
   const [scrolled, setScrolled] = useState(false);
   const handleScroll = (event: any) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
-    console.log(scrollPosition);
+    // console.log(scrollPosition);
     if (scrollPosition > 0) {
       setScrolled(true);
     } else {
