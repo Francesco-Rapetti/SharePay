@@ -1,13 +1,15 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, useColorScheme } from "react-native";
+import { Pressable, StyleSheet, useColorScheme } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
+import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 export default function PrimaryBtn({
   iconName,
@@ -66,8 +68,39 @@ export default function PrimaryBtn({
     };
   });
 
+  const sizeValue = useSharedValue<number>(0);
+  const opacityValue = useSharedValue<number>(1);
+  let isAnimating = false;
+  const handlePressAnimation = () => {
+    if (isAnimating) return;
+    isAnimating = true;
+    sizeValue.value = withTiming(1, { duration: 300 }, () => {
+      sizeValue.value = withTiming(0, { duration: 300 });
+    });
+    opacityValue.value = withTiming(0, { duration: 600 }, () => {
+      opacityValue.value = withTiming(1, { duration: 0 });
+    });
+    setTimeout(() => {
+      isAnimating = false;
+    }, 600);
+  };
+
+  const animatedOverlayStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(opacityValue.value, [1, 0], [1, 0]);
+    const size = interpolate(sizeValue.value, [0, 1], [1, 10]);
+    return {
+      opacity,
+      transform: [{ scale: size }],
+    };
+  });
+
   return (
-    <Pressable onPress={onPress} style={[styles.button]} {...props}>
+    <Pressable
+      onPressIn={handlePressAnimation}
+      onPress={onPress}
+      style={[styles.button]}
+      {...props}
+    >
       <Animated.View
         style={[
           animatedContainerStyle,
@@ -75,6 +108,25 @@ export default function PrimaryBtn({
           { backgroundColor: theme[colorScheme ?? "light"].primary },
         ]}
       >
+        <Animated.View
+          style={[
+            animatedOverlayStyle,
+            {
+              backgroundColor: theme[colorScheme ?? "light"].onPrimary,
+            },
+            {
+              borderRadius: 50,
+              aspectRatio: 1,
+              opacity: 1,
+              width: 60,
+              position: "absolute",
+              left: -60,
+              justifyContent: "center",
+              alignItems: "center",
+              height: 60,
+            },
+          ]}
+        ></Animated.View>
         <Animated.View style={animatedIconStyle}>
           <MaterialCommunityIcons
             name={iconName}
@@ -106,7 +158,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
-    // borderRadius: 50,
     paddingVertical: 15,
   },
   button: {
@@ -116,8 +167,6 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "center",
     justifyContent: "center",
-    // paddingHorizontal: 20,
-    // borderRadius: 50,
     flexDirection: "row",
     margin: 20,
     shadowOffset: { width: 0, height: 10 },
