@@ -31,6 +31,8 @@ export default function TabOneScreen() {
           console.log("new group");
         }}
         scrolled={scrolled}
+        textLeft={46}
+        textWidth={107}
       />
       <ScrollView
         style={[
